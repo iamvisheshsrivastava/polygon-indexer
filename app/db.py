@@ -3,7 +3,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import datetime
 
-# SQLite connection
 DATABASE_URL = "sqlite:///./polygon_indexer.db"
 
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
@@ -11,7 +10,6 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
-# Raw transactions table
 class Transaction(Base):
     __tablename__ = "transactions"
     id = Column(Integer, primary_key=True, index=True)
@@ -22,7 +20,6 @@ class Transaction(Base):
     amount = Column(Float)
     timestamp = Column(DateTime, default=datetime.datetime.utcnow)
 
-# Net flows table
 class NetFlow(Base):
     __tablename__ = "net_flows"
     id = Column(Integer, primary_key=True, index=True)
@@ -32,6 +29,5 @@ class NetFlow(Base):
     net_flow = Column(Float, default=0.0)
     last_updated = Column(DateTime, default=datetime.datetime.utcnow)
 
-# Create tables
 def init_db():
     Base.metadata.create_all(bind=engine)
