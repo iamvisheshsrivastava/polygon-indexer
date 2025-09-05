@@ -74,8 +74,15 @@ It listens for new blocks in real time, extracts token transfers, stores them in
 
 ## 🏗️ System Architecture
 
-```
-Polygon RPC  →  Indexer (web3.py)  →  SQLite DB  →  Transformer  →  FastAPI API  →  Streamlit Dashboard
+
+```mermaid
+flowchart LR
+  RPC[Polygon RPC] --> IDX[Indexing Service]
+  IDX --> DB[(SQLite Database)]
+  TR[Transformer] --> DB
+  API[FastAPI API] --> DB
+  UI[Streamlit Dashboard] --> API
+  IDX -. triggers .-> TR
 ```
 
 ---
@@ -152,21 +159,7 @@ Dashboard available at: [http://localhost:8501](http://localhost:8501)
 
 ---
 
-## 📈 Scalability Plan
 
-* Replace SQLite with **Postgres/MySQL** for production scale.
-* Use **Docker** for containerized deployment.
-* Add **Airflow/Prefect** for scheduling transformations.
-* Extend support to **multiple tokens and exchanges** by updating config.
-* Add monitoring with **Prometheus + Grafana**.
-
----
-
-## 📸 Sample Dashboard Screenshot
-
-*(Insert screenshot of Streamlit dashboard here)*
-
----
 
 ## 📚 References
 
